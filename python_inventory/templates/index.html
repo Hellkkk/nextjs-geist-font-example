@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block title %}Lista de Equipamentos - Gestão de Estoque{% endblock %}
+
+{% block content %}
+<div class="search-container">
+    <form method="GET" class="search-form">
+        <input type="text" name="search" value="{{ search }}" placeholder="Buscar por objeto, categoria, setor ou responsável..." class="search-input">
+        <button type="submit" class="btn-search">Buscar</button>
+    </form>
+    <a href="{{ url_for('add_equipment') }}" class="btn-primary">Novo Equipamento</a>
+</div>
+
+<h2>Lista de Equipamentos</h2>
+
+{% if equipments %}
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Nº do Bem</th>
+                <th>Categoria</th>
+                <th>Objeto</th>
+                <th>Modelo</th>
+                <th>Data Aquisição</th>
+                <th>Nota Fiscal</th>
+                <th>Valor (R$)</th>
+                <th>Estado</th>
+                <th>Setor</th>
+                <th>Responsável</th>
+                <th>Data Entrega</th>
+                <th>Manutenção</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equip in equipments %}
+            <tr>
+                <td><strong>{{ equip.num_bem }}</strong></td>
+                <td>{{ equip.categoria }}</td>
+                <td>{{ equip.objeto }}</td>
+                <td>{{ equip.modelo }}</td>
+                <td>{{ equip.data_aquisicao.strftime('%d/%m/%Y') if equip.data_aquisicao else '-' }}</td>
+                <td>{{ equip.nota_fiscal }}</td>
+                <td>R$ {{ "%.2f"|format(equip.valor) }}</td>
+                <td>
+                    <span class="status-badge status-{{ equip.estado_conservacao.lower() }}">
+                        {{ equip.estado_conservacao }}
+                    </span>
+                </td>
+                <td>{{ equip.setor_alocado }}</td>
+                <td>{{ equip.responsavel_operador }}</td>
+                <td>{{ equip.data_entrega.strftime('%d/%m/%Y') if equip.data_entrega else '-' }}</td>
+                <td>{{ equip.manutencao_dada or '-' }}</td>
+                <td>
+                    <div class="actions">
+                        <a href="{{ url_for('view_equipment', id=equip.id) }}" class="btn-small btn-view">Ver</a>
+                        <a href="{{ url_for('edit_equipment', id=equip.id) }}" class="btn-small btn-edit">Editar</a>
+                        <form method="POST" action="{{ url_for('delete_equipment', id=equip.id) }}" style="display: inline;" onsubmit="return confirmDelete('{{ equip.objeto }}');">
+                            <button type="submit" class="btn-small btn-delete">Excluir</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div style="margin-top: 20px; color: #6b7280; font-size: 14px;">
+    <strong>Total de equipamentos:</strong> {{ equipments|length }}
+    {% if search %}
+    | <strong>Filtrado por:</strong> "{{ search }}"
+    <a href="{{ url_for('index') }}" style="margin-left: 10px; color: #171a20;">Limpar filtro</a>
+    {% endif %}
+</div>
+
+{% else %}
+<div class="empty-state">
+    {% if search %}
+    <h3>Nenhum equipamento encontrado</h3>
+    <p>Não foram encontrados equipamentos com o termo "{{ search }}".</p>
+    <a href="{{ url_for('index') }}" class="btn-primary">Ver todos os equipamentos</a>
+    {% else %}
+    <h3>Nenhum equipamento cadastrado</h3>
+    <p>Comece adicionando o primeiro equipamento ao sistema.</p>
+    <a href="{{ url_for('add_equipment') }}" class="btn-primary">Adicionar Primeiro Equipamento</a>
+    {% endif %}
+</div>
+{% endif %}
+
+<style>
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.status-novo {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-bom {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.status-regular {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-ruim {
+    background-color: #fed7aa;
+    color: #c2410c;
+}
+
+.status-péssimo {
+    background-color: #fecaca;
+    color: #991b1b;
+}
+</style>
+{% endblock %}
