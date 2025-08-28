@@ -1,0 +1,200 @@
+{% extends "layout.html" %}
+
+{% block title %}Adicionar Equipamento - Gestão de Estoque{% endblock %}
+
+{% block content %}
+<h2>Adicionar Novo Equipamento</h2>
+
+<div class="form-container">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-grid">
+            <div class="form-group">
+                {{ form.num_bem.label }}
+                {{ form.num_bem(class="form-control") }}
+                {% if form.num_bem.errors %}
+                    <div class="error-message">
+                        {% for error in form.num_bem.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.categoria.label }}
+                {{ form.categoria(class="form-control") }}
+                {% if form.categoria.errors %}
+                    <div class="error-message">
+                        {% for error in form.categoria.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.objeto.label }}
+                {{ form.objeto(class="form-control") }}
+                {% if form.objeto.errors %}
+                    <div class="error-message">
+                        {% for error in form.objeto.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.modelo.label }}
+                {{ form.modelo(class="form-control") }}
+                {% if form.modelo.errors %}
+                    <div class="error-message">
+                        {% for error in form.modelo.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.data_aquisicao.label }}
+                {{ form.data_aquisicao(class="form-control") }}
+                {% if form.data_aquisicao.errors %}
+                    <div class="error-message">
+                        {% for error in form.data_aquisicao.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.nota_fiscal.label }}
+                {{ form.nota_fiscal(class="form-control") }}
+                {% if form.nota_fiscal.errors %}
+                    <div class="error-message">
+                        {% for error in form.nota_fiscal.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.valor.label }}
+                {{ form.valor(class="form-control", step="0.01") }}
+                {% if form.valor.errors %}
+                    <div class="error-message">
+                        {% for error in form.valor.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.estado_conservacao.label }}
+                {{ form.estado_conservacao(class="form-control") }}
+                {% if form.estado_conservacao.errors %}
+                    <div class="error-message">
+                        {% for error in form.estado_conservacao.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.setor_alocado.label }}
+                {{ form.setor_alocado(class="form-control") }}
+                {% if form.setor_alocado.errors %}
+                    <div class="error-message">
+                        {% for error in form.setor_alocado.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.responsavel_operador.label }}
+                {{ form.responsavel_operador(class="form-control") }}
+                {% if form.responsavel_operador.errors %}
+                    <div class="error-message">
+                        {% for error in form.responsavel_operador.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.data_entrega.label }}
+                {{ form.data_entrega(class="form-control") }}
+                <small style="color: #6b7280; font-size: 12px; margin-top: 4px;">Campo opcional</small>
+                {% if form.data_entrega.errors %}
+                    <div class="error-message">
+                        {% for error in form.data_entrega.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.manutencao_dada.label }}
+                {{ form.manutencao_dada(class="form-control") }}
+                <small style="color: #6b7280; font-size: 12px; margin-top: 4px;">Campo opcional</small>
+                {% if form.manutencao_dada.errors %}
+                    <div class="error-message">
+                        {% for error in form.manutencao_dada.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1;">
+            {{ form.servico_realizado.label }}
+            {{ form.servico_realizado(class="form-control") }}
+            <small style="color: #6b7280; font-size: 12px; margin-top: 4px;">Campo opcional - Descreva os serviços realizados no equipamento</small>
+            {% if form.servico_realizado.errors %}
+                <div class="error-message">
+                    {% for error in form.servico_realizado.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-actions">
+            <a href="{{ url_for('index') }}" class="btn-cancel">Cancelar</a>
+            {{ form.submit(class="btn-submit") }}
+        </div>
+    </form>
+</div>
+
+<style>
+.error-message {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.error-message span {
+    display: block;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.form-group small {
+    display: block;
+}
+</style>
+{% endblock %}
