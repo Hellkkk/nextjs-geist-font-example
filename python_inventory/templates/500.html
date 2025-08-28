@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}Erro interno - Gestão de Estoque{% endblock %}
+
+{% block content %}
+<div class="empty-state" style="padding: 80px 20px;">
+    <h3 style="font-size: 3rem; margin-bottom: 20px; color: #ef4444;">500</h3>
+    <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: #171a20;">Erro interno do servidor</h2>
+    <p style="font-size: 16px; margin-bottom: 30px; color: #6b7280;">
+        Ocorreu um erro interno no sistema. Nossa equipe foi notificada e está trabalhando para resolver o problema.
+    </p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ url_for('index') }}" class="btn-primary">Voltar ao Início</a>
+        <button onclick="window.location.reload()" class="btn-cancel" style="border: 2px solid #e8e8e8; background: transparent;">Tentar Novamente</button>
+    </div>
+</div>
+{% endblock %}
